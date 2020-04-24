@@ -1,18 +1,14 @@
-<p align="center">
-  <img width="200" src="https://open-wc.org/hero.png"></img>
-</p>
-
-## Open-wc Starter App
-
-[![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
+## COVID-19 Tracker App
+## Deployed at
+https://drb-covid-19-tracker.herokuapp.com/
 
 ## Quickstart
 
 To get started:
 
 ```sh
-npm init @open-wc
-# requires node 10 & npm 6 or higher
+yarn install
+yarn start
 ```
 
 ## Scripts
