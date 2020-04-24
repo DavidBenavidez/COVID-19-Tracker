@@ -1,0 +1,16 @@
+{
+  "name": "COVID-19 Tracker",
+  "short_name": "COVID-19 Tracker",
+  "description": "A simple COVID-19 Tracker App",
+  "icons": [
+    {
+      "src": "images/manifest/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#FFFFFF"
+}

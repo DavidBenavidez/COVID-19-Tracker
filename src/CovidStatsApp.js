@@ -1,11 +1,10 @@
 import { LitElement, html, css } from 'lit-element';
-import { setPassiveTouchGestures, setRootPath } from '@polymer/polymer/lib/utils/settings.js';
+import { router } from 'lit-element-router';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import '@polymer/app-route/app-route.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
@@ -15,12 +14,14 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-item/paper-item.js';
 import countriesCode from './countries.js';
 
-export class CovidStatsApp extends LitElement {
+
+export class CovidStatsApp extends router(LitElement) {
   static get properties() {
     return {
       countries: {type: Array}, 
       filter: {type: String},
       sorter: {type: String},
+      loaded: {type: Number},
     };
   }
 
@@ -29,14 +30,49 @@ export class CovidStatsApp extends LitElement {
     this.countries = [];
     this.filter = '';
     this.sorter = '';
+    this.loaded = 3;
   }
-
-  async _getStatistics(){}
 
   connectedCallback() {
     super.connectedCallback();
     this._getStatistics();
   }
+
+  updated(){
+    let sentinel = this.shadowRoot.querySelector("#sentinel");
+    
+    let observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0) {
+          this.loaded += 10;
+        }
+      });
+    });
+
+    if(sentinel) observer.observe(sentinel);
+  }
+
+  static get routes() {
+    return [{
+      name: 'home',
+      pattern: '',
+      data: { title: 'Home' }
+    }, {
+      name: 'map',
+      pattern: 'map'
+    }, {
+      name: 'not-found',
+      pattern: '*'
+    }];
+  }
+
+  router(route, params, query, data) {
+    this.route = route;
+    this.params = params;
+    this.query = query;
+  }
+
+  async _getStatistics(){}
 
   static get styles() {
     return css`
@@ -73,7 +109,7 @@ export class CovidStatsApp extends LitElement {
       div[main-title] {
         font-size: 16px;
         font-weight: 700;
-        letter-spacing: 3px;
+        letter-spacing: 1px;
       }
 
       paper-dropdown-menu {
@@ -83,6 +119,16 @@ export class CovidStatsApp extends LitElement {
         --paper-input-container-invalid-color: red;
         --paper-input-container-input-color: white;
       }
+
+      .link-to-map { 
+        color: white; 
+        text-decoration: none; 
+      }
+
+      #sentinel {
+        width: 1px;
+        height: 1px;
+      }      
 
       @media only screen and (max-width: 600px) {
         .main-content { flex-flow: column wrap; }
@@ -150,13 +196,14 @@ export class CovidStatsApp extends LitElement {
     let countries = this.countries.filter(({country})=> country.toLowerCase().indexOf(this.filter.toLowerCase()) != -1);
     this._sortCountries(countries);
     countries = !countries? this.countries : countries;
+    countries = countries.slice(0, this.loaded);
 
     return html`
       <app-header-layout has-scrolling-region fullbleed>  
         <app-header slot="header" fixed effects="waterfall">
           <app-toolbar>
-            <div main-title>COVID-19</div>
-            <paper-icon-button icon="track-changes"></paper-icon-button>
+            <div main-title>COVID-19 Tracker</div>
+            <a class="link-to-map" name="map" href="/map"><paper-icon-button icon="track-changes"></paper-icon-button></a>
 
             <paper-icon-button icon="search"></paper-icon-button>
             <paper-input always-float-label label="Country Name" name="country" @keyup=${this._searchCountryKeyUp} @keydown=${this._searchCountryKeyDown}></paper-input>            
@@ -170,10 +217,13 @@ export class CovidStatsApp extends LitElement {
             </paper-dropdown-menu>
           </app-toolbar>
         </app-header>
+        
         <div class="main-content">
-          ${countries.map((country)=>{
-            let { code: country_code } = countriesCode.find(({name}) => name.toLowerCase().indexOf(country.country.toLowerCase()) != -1);
-                    
+          ${countries.map((country, index)=>{
+            let { code: country_code } = countriesCode.find(({name}) => name.toLowerCase().indexOf(country.country.toLowerCase()) != -1);   
+            
+            if (index===(this.loaded-1)) return html`<div id="sentinel"></div>`
+
             return html`
               <covid-stat-box
                 .country_code=${country_code.toLowerCase()}

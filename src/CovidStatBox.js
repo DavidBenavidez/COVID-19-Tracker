@@ -1,5 +1,4 @@
 import { LitElement, html, css } from 'lit-element';
-// import { IntersectionElementSuper } from "@lrnwebcomponents/intersection-element/lib/IntersectionElementSuper.js";
 
 export class CovidStatBox extends LitElement {
   static get properties() {
@@ -28,6 +27,7 @@ export class CovidStatBox extends LitElement {
       }
 
       :host(:hover) {
+        cursor: pointer;
         transition: 0.3s;
         opacity: 1;
       }
@@ -132,7 +132,7 @@ export class CovidStatBox extends LitElement {
       }
     `;
   }
-  // <img class="country-flag" src="https://via.placeholder.com/400x250" data-src="src/assets/country_flags/${this.country_code? this.country_code : 'af'}.png"></img> 
+ 
   render() {
     return html`
     <div class="country-flag-container">
@@ -140,7 +140,7 @@ export class CovidStatBox extends LitElement {
         <span> ${this.country} </span> 
       </div>
       <div class="country-flag-overlay"></div>
-      <img class="country-flag" src="src/assets/country_flags/${this.country_code? this.country_code : 'af'}.png"></img>
+      <img class="country-flag" src="src/assets/country_flags/${this.country_code? this.country_code : 'af'}.png">
     </div>
     <div class="stats-container">
       <div class="mini-stat-box">

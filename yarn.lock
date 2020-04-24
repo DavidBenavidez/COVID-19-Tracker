@@ -907,14 +907,6 @@
     "@polymer/iron-scroll-target-behavior" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/app-route@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@polymer/app-route/-/app-route-3.0.2.tgz#749096fb610fb15d27c7b68446406f30786cf93d"
-  integrity sha512-8Y34evmsaYh7ONr+zLwLzXaU0iOZZQj1E2uB3iaToQHbOP1POhKlnmAycBQ/eFB8BwrdSUBaDQk+rZhio78FQw==
-  dependencies:
-    "@polymer/iron-location" "^3.0.0-pre.26"
-    "@polymer/polymer" "^3.0.0"
-
 "@polymer/font-roboto@^3.0.1":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@polymer/font-roboto/-/font-roboto-3.0.2.tgz#80cdaa7225db2359130dfb2c6d9a3be1820020c3"
@@ -992,7 +984,7 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-icon@^3.0.0-pre.26", "@polymer/iron-icon@^3.0.1":
+"@polymer/iron-icon@^3.0.0-pre.26":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@polymer/iron-icon/-/iron-icon-3.0.1.tgz#93211c39d8825fe4965a68419566036c1df291eb"
   integrity sha512-QLPwirk+UPZNaLnMew9VludXA4CWUCenRewgEcGYwdzVgDPCDbXxy6vRJjmweZobMQv/oVLppT2JZtJFnPxX6g==
@@ -1025,13 +1017,6 @@
   dependencies:
     "@polymer/iron-a11y-announcer" "^3.0.0-pre.26"
     "@polymer/iron-validatable-behavior" "^3.0.0-pre.26"
-    "@polymer/polymer" "^3.0.0"
-
-"@polymer/iron-location@^3.0.0-pre.26":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@polymer/iron-location/-/iron-location-3.0.2.tgz#7ca2df089c57deb8a6f54f5cc3722af0ff871441"
-  integrity sha512-75XlPsrm6RQUPNzWWaA0TnTQaWZUYX8UB4Q6WCjikKWzmaSCCxlBrVVYf8WRqtCxw/PeCvLn5kGL6qhTlNTCEA==
-  dependencies:
     "@polymer/polymer" "^3.0.0"
 
 "@polymer/iron-media-query@^3.0.0-pre.26":
@@ -3749,6 +3734,11 @@ listr@^0.14.2:
     listr-verbose-renderer "^0.5.0"
     p-map "^2.0.0"
     rxjs "^6.3.3"
+
+lit-element-router@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/lit-element-router/-/lit-element-router-2.0.1.tgz#92d22ebd9db490aecc649e76a620eb811ec2f1aa"
+  integrity sha512-11n2MhR0r+/H1k/zSGC/0hRVAX39ba8axd60VvqpBY3NBYfVVtB69Uq8H6ki1alKPBzmzGaM8e611KnOLuqCKw==
 
 lit-element@^2.0.1:
   version "2.3.1"
