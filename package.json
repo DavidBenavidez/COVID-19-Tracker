@@ -65,6 +65,7 @@
     "eslint-plugin-import": "2.20.1",
     "lit-element": "^2.0.1",
     "lit-html": "^1.0.0",
+    "mil-pulse-spinner": "^1.0.1",
     "web-animations-js": "^2.3.2"
   }
 }

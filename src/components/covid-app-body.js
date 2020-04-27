@@ -1,10 +1,11 @@
 import { LitElement, html, css } from 'lit-element';
+import './covid-app-nav.js';
+import './covid-stat-box.js';
+import "mil-pulse-spinner";
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/iron-icons/iron-icons.js';
 import countriesCode from '../utils/countries.js';
-import './covid-app-nav.js';
-import './covid-stat-box.js';
 
 export class CovidAppBody extends LitElement {
   static get properties() {
@@ -13,6 +14,7 @@ export class CovidAppBody extends LitElement {
       filter: { type: String },
       sorter: { type: String },
       loaded: { type: Number },
+      loading: { type: Boolean },
     };
   }
 
@@ -22,6 +24,7 @@ export class CovidAppBody extends LitElement {
     this.filter = '';
     this.sorter = '';
     this.loaded = 2;
+    this.loading = true;
   }
 
   connectedCallback() {
@@ -45,6 +48,13 @@ export class CovidAppBody extends LitElement {
 
   static get styles() {
     return css`
+      mil-pulse-spinner {
+        --height: 100px;
+        --width: 100px;
+        --color1: var(--app-primary-color);
+        --color2: gray;
+      }
+      
       .main-content {
         display: flex;
         flex-flow: row wrap;
@@ -104,6 +114,9 @@ export class CovidAppBody extends LitElement {
 
     return html`
       <covid-app-nav @updateSorter=${this.updateSorter} @keyboardUp=${this.updateFilter}></covid-app-nav>
+
+      ${this.loading? html`<mil-pulse-spinner id="myMilPulseSpinner"></mil-pulse-spinner>`:''}
+
       <div class="main-content">
         ${countries.map((country, index) => {
     const { code: countryCode } = countriesCode.find(({ name }) => name.toLowerCase().indexOf(country.country.toLowerCase()) !== -1);

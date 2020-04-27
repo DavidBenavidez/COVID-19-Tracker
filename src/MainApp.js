@@ -13,6 +13,10 @@ export class MainApp extends LitElement {
         --light-rose-color: #FF5D73;
         display: block;
       }
+
+      app-heaeder-layout {
+        background-color: white;
+      }
     `;
   }
 
