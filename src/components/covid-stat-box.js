@@ -4,7 +4,7 @@ export class CovidStatBox extends LitElement {
   static get properties() {
     return {
       country: { type: String },
-      country_code: { type: String },
+      countryCode: { type: String },
       cases: { type: Number },
       newCases: { type: Number },
       deaths: { type: Number },
@@ -132,7 +132,7 @@ export class CovidStatBox extends LitElement {
       }
     `;
   }
- 
+
   render() {
     return html`
     <div class="country-flag-container">
@@ -140,7 +140,7 @@ export class CovidStatBox extends LitElement {
         <span> ${this.country} </span> 
       </div>
       <div class="country-flag-overlay"></div>
-      <img class="country-flag" src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/png250px/${this.country_code? this.country_code : 'af'}.png">
+      <img class="country-flag" src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/png250px/${this.countryCode ? this.countryCode : 'af'}.png">
     </div>
     <div class="stats-container">
       <div class="mini-stat-box">
@@ -156,6 +156,8 @@ export class CovidStatBox extends LitElement {
         <span class="stat stat-recovered">${this.recovered}</span>
       </div>
     </div>
-    `
+    `;
   }
 }
+
+customElements.define('covid-stat-box', CovidStatBox);
