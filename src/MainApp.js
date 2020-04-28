@@ -9,13 +9,13 @@ export class MainApp extends LitElement {
       :host {
         --app-primary-color: black;
         --app-secondary-color: white;
-        --light-green-color: #ACF39D; 
-        --light-rose-color: #FF5D73;
+        --recovered-color: #ACF39D; 
+        --deaths-color: #FF5D73;
         display: block;
       }
 
       app-heaeder-layout {
-        background-color: white;
+        background-color: var(--app-secondary-color);
       }
     `;
   }

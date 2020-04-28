@@ -108,8 +108,8 @@ export class CovidStatBox extends LitElement {
         font-weight: 600;
       }
 
-      .stat-deaths { color: var(--light-rose-color); }
-      .stat-recovered { color: var(--light-green-color); }
+      .stat-deaths { color: var(--deaths-color); }
+      .stat-recovered { color: var(--recovered-color); }
 
       @media only screen and (max-width: 600px) {
         :host { flex-basis: unset; }

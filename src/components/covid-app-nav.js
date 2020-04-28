@@ -10,55 +10,54 @@ import '@polymer/paper-listbox/paper-listbox.js';
 export class CovidAppNav extends LitElement {
   static get properties() {
     return {
-      typingTimer: { type: String },
+      typingTimer: { type: Number },
     };
+  }
+
+  constructor() {
+    super();
+    this.typingTimer = 0;
   }
 
   static get styles() {
     return css`
-      app-header {
+      .nav-container {
         height: 60px;
         color: var(--app-secondary-color);
         background-color: var(--app-primary-color);
         z-index: 2;
       }
 
-      app-header paper-icon-button {
+      .nav-container .nav-container_button {
         --paper-icon-button-ink-color: var(--app-secondary-color);
       }
 
-      app-header paper-input {
+      .nav-container .nav-container_input {
         --paper-input-container-color: var(--app-secondary-color);
         --paper-input-container-focus-color: var(--app-secondary-color);
         --paper-input-container-invalid-color: red;
         --paper-input-container-input-color: var(--app-secondary-color);
       }
 
-      paper-dropdown-menu {
+      .nav-container .nav-container_dropdown {
         margin-left: 8px;
         --paper-input-container-color: white;
         --paper-input-container-focus-color: white;
         --paper-input-container-invalid-color: red;
         --paper-input-container-input-color: white;
       }
-
-      .link-to-map { 
-        color: white; 
-        text-decoration: none; 
-      }
     `;
   }
 
   render() {
     return html`
-      <app-header slot="header" fixed effects="waterfall">
+      <app-header class="nav-container" slot="header" fixed effects="waterfall">
         <app-toolbar>
           <div main-title>COVID-19 Tracker</div>
-          <a class="link-to-map" name="map" href="/map"><paper-icon-button icon="track-changes"></paper-icon-button></a>
-          
-          <paper-icon-button icon="search"></paper-icon-button>
-          <paper-input always-float-label label="Country Name" name="country" @keyup=${this.searchCountryKeyUp} @keydown=${this.searchCountryKeyDown}></paper-input>
-          <paper-dropdown-menu label="Sort By">
+
+          <paper-icon-button class="nav-container_button" icon="search"></paper-icon-button>
+          <paper-input class="nav-container_input" always-float-label label="Country Name" name="country" @keyup=${this.searchCountryKeyUp} @keydown=${this.searchCountryKeyDown}></paper-input>
+          <paper-dropdown-menu class="nav-container_dropdown" label="Sort By">
             <paper-listbox slot="dropdown-content" id="sort_countries_dropdown" @iron-select=${this.updateSorter}>
               <paper-item value="Default">Default</paper-item>
               <paper-item value="Cases">Cases</paper-item>
@@ -88,7 +87,7 @@ export class CovidAppNav extends LitElement {
   }
 
   updateSorter(e) {
-    const sorterValue = e.target.selectedItem.innerText;
+    const sorterValue = e.target.selectedItem.getAttribute('value');
     this.dispatchEvent(new CustomEvent('updateSorter', {
       detail: {
         sorterValue,

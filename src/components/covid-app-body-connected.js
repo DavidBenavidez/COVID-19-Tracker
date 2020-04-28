@@ -12,8 +12,8 @@ export class CovidAppBodyConnected extends CovidAppBody {
       },
     ).catch((e) => { console.error(e.message); });
     const data = await res.json().catch((e) => { console.error(e.message); });
-    this.countries = data.response;  
-    this.loading = false;
+    this.countries = data.response;
+    this.isLoading = false;
   }
 }
 

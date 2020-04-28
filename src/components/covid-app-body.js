@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import './covid-app-nav.js';
 import './covid-stat-box.js';
-import "mil-pulse-spinner";
+import 'mil-pulse-spinner';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/iron-icons/iron-icons.js';
@@ -12,9 +12,9 @@ export class CovidAppBody extends LitElement {
     return {
       countries: { type: Array },
       filter: { type: String },
-      sorter: { type: String },
       loaded: { type: Number },
-      loading: { type: Boolean },
+      isLoading: { type: Boolean },
+      sorter: { type: String },
     };
   }
 
@@ -24,7 +24,7 @@ export class CovidAppBody extends LitElement {
     this.filter = '';
     this.sorter = '';
     this.loaded = 2;
-    this.loading = true;
+    this.isLoading = true;
   }
 
   connectedCallback() {
@@ -33,17 +33,19 @@ export class CovidAppBody extends LitElement {
   }
 
   updated() {
-    const sentinel = this.shadowRoot.querySelector('#sentinel');
+    const sentinel = this.shadowRoot.getElementById('sentinel');
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.intersectionRatio > 0) {
-          this.loaded += 10;
-        }
+    if (sentinel) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio > 0) {
+            this.loaded += 10;
+          }
+        });
       });
-    });
 
-    if (sentinel) observer.observe(sentinel);
+      observer.observe(sentinel);
+    }
   }
 
   static get styles() {
@@ -55,15 +57,9 @@ export class CovidAppBody extends LitElement {
         --color2: gray;
       }
       
-      .main-content {
+      #main-content {
         display: flex;
         flex-flow: row wrap;
-      }
-
-      div[main-title] {
-        font-size: 16px;
-        font-weight: 700;
-        letter-spacing: 1px;
       }
 
       #sentinel {
@@ -79,6 +75,46 @@ export class CovidAppBody extends LitElement {
     `;
   }
 
+  render() {
+    if (this.isLoading) return html`<mil-pulse-spinner id="myMilPulseSpinner"></mil-pulse-spinner>`;
+
+    let countries = this.countries.filter(({ country }) => (country.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1));
+
+    this.sortCountries(countries);
+    countries = !countries ? this.countries : countries;
+    countries = countries.slice(0, this.loaded);
+
+    return html`
+      <covid-app-nav @updateSorter=${this.updateSorter} @keyboardUp=${this.updateFilter}></covid-app-nav>
+
+      <div id="main-content">
+        ${this._mapCountries(countries)}
+      </div>
+    `;
+  }
+
+  _mapCountries(countries) {
+    return html`${countries.map((country, index) => {
+      const { code: countryCode } = countriesCode.find(({ name }) => (name.toLowerCase().indexOf(country.country.toLowerCase()) !== -1));
+
+      if (index === (this.loaded - 1)) return html`<div id="sentinel"></div>`;
+
+      return html`
+        <covid-stat-box
+          .countryCode=${countryCode.toLowerCase()}
+          .country=${country.country.toUpperCase()}
+          .cases=${country.cases.total}
+          .newCases=${country.cases.new}
+          .deaths=${country.deaths.total}
+          .recovered=${country.cases.recovered}
+        ><covid-stat-box>`;
+    })}`;
+  }
+
+  getStatistics() {
+    console.log('Fetch COVID-19 Statistics');
+  }
+
   updateFilter({ detail: { filterValue } }) {
     this.filter = filterValue;
   }
@@ -88,52 +124,10 @@ export class CovidAppBody extends LitElement {
   }
 
   sortCountries(countries) {
-    switch (this.sorter) {
-      case 'Cases': {
-        countries.sort(((a, b) => ((a.cases.total > b.cases.total) ? -1 : ((a.cases.total < b.cases.total) ? 1 : 0))));
-        break;
-      }
-      case 'Recovered': {
-        countries.sort(((a, b) => ((a.cases.recovered > b.cases.recovered) ? -1 : ((a.cases.recovered < b.cases.recovered) ? 1 : 0))));
-        break;
-      }
-      case 'Deaths': {
-        countries.sort(((a, b) => ((a.deaths.total > b.deaths.total) ? -1 : ((a.deaths.total < b.deaths.total) ? 1 : 0))));
-        break;
-      }
-      default:
-        break;
-    }
-  }
-
-  render() {
-    let countries = this.countries.filter(({ country }) => country.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1);
-    this.sortCountries(countries);
-    countries = !countries ? this.countries : countries;
-    countries = countries.slice(0, this.loaded);
-
-    return html`
-      <covid-app-nav @updateSorter=${this.updateSorter} @keyboardUp=${this.updateFilter}></covid-app-nav>
-
-      ${this.loading? html`<mil-pulse-spinner id="myMilPulseSpinner"></mil-pulse-spinner>`:''}
-
-      <div class="main-content">
-        ${countries.map((country, index) => {
-    const { code: countryCode } = countriesCode.find(({ name }) => name.toLowerCase().indexOf(country.country.toLowerCase()) !== -1);
-
-    if (index === (this.loaded - 1)) return html`<div id="sentinel"></div>`;
-
-    return html`
-                  <covid-stat-box
-                    .countryCode=${countryCode.toLowerCase()}
-                    .country=${country.country.toUpperCase()}
-                    .cases=${country.cases.total}
-                    .newCases=${country.cases.new}
-                    .deaths=${country.deaths.total}
-                    .recovered=${country.cases.recovered}
-                  ><covid-stat-box>`;
-  })}
-      </div>
-    `;
+    countries.sort((a, b) => {
+      if (this.sorter === 'Cases') return ((a.cases.total > b.cases.total) ? -1 : 1);
+      if (this.sorter === 'Recovered') return ((a.cases.recovered > b.cases.recovered) ? -1 : 1);
+      if (this.sorter === 'Deaths') return ((a.deaths.total > b.deaths.total) ? -1 : 1);
+    });
   }
 }
