@@ -1,6 +1,4 @@
 import { LitElement, html, css } from 'lit-element';
-import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import './components/covid-app-body-connected.js';
 
 export class MainApp extends LitElement {
@@ -14,7 +12,7 @@ export class MainApp extends LitElement {
         display: block;
       }
 
-      app-heaeder-layout {
+      app-header-layout {
         background-color: var(--app-secondary-color);
       }
     `;
@@ -22,9 +20,7 @@ export class MainApp extends LitElement {
 
   render() {
     return html`
-      <app-header-layout has-scrolling-region fullbleed>
-        <covid-app-body-connected></covid-app-body-connected>
-      </app-header-layout>
+      <covid-app-body-connected></covid-app-body-connected>
     `;
   }
 }

@@ -1,11 +1,15 @@
-import { LitElement, html, css } from 'lit-element';
 import './covid-app-nav.js';
 import './covid-stat-box.js';
+import { LitElement, html } from 'lit-element';
 import 'mil-pulse-spinner';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/iron-icons/iron-icons.js';
-import countriesCode from '../utils/countries.js';
+import bodyCss from '../stylesheets/covid-app-body-style.js';
+
+
+import '@polymer/app-layout/app-header-layout/app-header-layout.js';
+import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 
 export class CovidAppBody extends LitElement {
   static get properties() {
@@ -49,34 +53,13 @@ export class CovidAppBody extends LitElement {
   }
 
   static get styles() {
-    return css`
-      mil-pulse-spinner {
-        --height: 100px;
-        --width: 100px;
-        --color1: var(--app-primary-color);
-        --color2: gray;
-      }
-      
-      #main-content {
-        display: flex;
-        flex-flow: row wrap;
-      }
-
-      #sentinel {
-        width: 1px;
-        height: 1px;
-      }      
-
-      @media only screen and (max-width: 600px) { .main-content { flex-flow: column wrap; } }
-      @media only screen and (min-width: 600px) { .main-content { flex-flow: column wrap; } }
-      @media only screen and (min-width: 768px) { .main-content { flex-flow: column wrap; } }
-      @media only screen and (min-width: 992px) { .main-content { flex-flow: row wrap; } }
-      @media only screen and (min-width: 1200px) { .main-content { flex-flow: row wrap; } }
-    `;
+    return bodyCss;
   }
 
   render() {
-    if (this.isLoading) return html`<mil-pulse-spinner id="myMilPulseSpinner"></mil-pulse-spinner>`;
+    if (this.isLoading) {
+      return html`<mil-pulse-spinner id="myMilPulseSpinner"></mil-pulse-spinner>`;
+    }
 
     let countries = this.countries.filter(({ country }) => (country.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1));
 
@@ -85,28 +68,24 @@ export class CovidAppBody extends LitElement {
     countries = countries.slice(0, this.loaded);
 
     return html`
-      <covid-app-nav @updateSorter=${this.updateSorter} @keyboardUp=${this.updateFilter}></covid-app-nav>
-
-      <div id="main-content">
-        ${this._mapCountries(countries)}
-      </div>
+      <app-header-layout has-scrolling-region fullbleed>
+        <app-header class="nav-container" slot="header" fixed effects="waterfall">
+          <covid-app-nav @updateSorter=${this.updateSorter} @keyboardUp=${this.updateFilter}></covid-app-nav>
+        </app-header>
+        <div id="main-content">
+          ${this._mapCountries(countries)}
+        </div>
+      </app-header-layout>
     `;
   }
 
   _mapCountries(countries) {
     return html`${countries.map((country, index) => {
-      const { code: countryCode } = countriesCode.find(({ name }) => (name.toLowerCase().indexOf(country.country.toLowerCase()) !== -1));
-
       if (index === (this.loaded - 1)) return html`<div id="sentinel"></div>`;
 
       return html`
         <covid-stat-box
-          .countryCode=${countryCode.toLowerCase()}
-          .country=${country.country.toUpperCase()}
-          .cases=${country.cases.total}
-          .newCases=${country.cases.new}
-          .deaths=${country.deaths.total}
-          .recovered=${country.cases.recovered}
+          .country=${country}
         ><covid-stat-box>`;
     })}`;
   }

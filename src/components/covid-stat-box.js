@@ -1,162 +1,60 @@
-import { LitElement, html, css } from 'lit-element';
+
+import './covid-stat-modal.js';
+import { LitElement, html } from 'lit-element';
+import '@polymer/paper-button/paper-button.js';
+import './progress-bar.js';
+import boxCss from '../stylesheets/covid-stat-box-style.js';
+import countriesCode from '../utils/countries.js';
 
 export class CovidStatBox extends LitElement {
   static get properties() {
     return {
-      country: { type: String },
-      countryCode: { type: String },
-      cases: { type: Number },
-      newCases: { type: Number },
-      deaths: { type: Number },
-      recovered: { type: Number },
+      country: { type: Object },
     };
   }
 
   static get styles() {
-    return css`
-      :host {
-        max-height: 250px;
-        box-sizing: border-box;
-        border: 5px solid white;
-        opacity: 1;
-        
-        position: relative;
-        display: flex;
-        flex-basis: 25%;
-        flex-flow: column wrap;
-      }
-
-      :host(:hover) {
-        cursor: pointer;
-        transition: 0.3s;
-        opacity: 1;
-      }
-
-      .stats {
-        margin-top: auto;
-      }
-
-      .country-flag-container {
-        overflow: hidden;
-        height: 75%;
-        display: flex;
-        justify-content: center;
-      }
-
-      .country-flag-overlay {
-        position: absolute;
-        background-image: linear-gradient(180deg, rgba(0,0,0,1) 8%, rgba(161,161,171,0) 22%);
-
-        opacity: 0.5;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        width: 100%;
-        z-index: 1;
-      }
-
-      .country-flag-overlay:hover {
-        transition: 0.5s;
-        opacity: 0;
-      }
-
-      .country-flag-container .country-flag {
-        width: 100%;
-        align-self: center;
-      }
-
-      .stats-container {
-        display: flex;
-        font-family: roboto;
-        height: 25%;
-        width: 100%;
-      }
-
-      .stats-container .mini-stat-box {
-        display: flex;
-        background-color: black;
-        opacity: 0.7;
-        width: 33.3%;
-        height: 100%;
-        flex-flow: column wrap;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .stat-country {
-        position: absolute;
-        margin-top: 8px;
-        display: flex;
-        justify-content: center;
-        letter-spacing: 1.5px;
-        width: 200px;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 500;
-        color: white;
-        z-index: 2;
-      }
-
-      .stat { 
-        font-weight: 400;
-        color: white; 
-      }
-
-      .stat-header { 
-        letter-spacing: 1px;
-        font-weight: 600;
-      }
-
-      .stat-deaths { color: var(--deaths-color); }
-      .stat-recovered { color: var(--recovered-color); }
-
-      @media only screen and (max-width: 600px) {
-        :host { flex-basis: unset; }
-      }
-
-      @media only screen and (min-width: 600px) {
-        :host { flex-basis: unset; }
-      }
-
-      @media only screen and (min-width: 768px) {
-        :host { flex-basis: 25%; }
-      } 
-
-      @media only screen and (min-width: 992px) {
-        :host { flex-basis: 25%; }
-      } 
-
-      @media only screen and (min-width: 1200px) {
-        :host { flex-basis: 25%; }
-      }
-    `;
+    return boxCss;
   }
 
   render() {
+    if (!this.country) return;
+
+    const { code: countryCode } = countriesCode.find(({ name }) => (name.toLowerCase().indexOf(this.country.country.toLowerCase()) !== -1));
+
     return html`
-    <div class="country-flag-container">
-      <div class="stat-country"> 
-        <span> ${this.country} </span> 
+      <covid-stat-modal .countryCode=${countryCode}></covid-stat-modal>
+      <div class="stat-box-header" @click=${this.openModal}> 
+        <span class="stat-country"> ${this.country.country.toUpperCase()} </span> 
+        <img class="country-flag" src="https://www.countryflags.io/${countryCode || 'af'}/flat/64.png">
       </div>
-      <div class="country-flag-overlay"></div>
-      <img class="country-flag" src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/png250px/${this.countryCode ? this.countryCode : 'af'}.png">
-    </div>
-    <div class="stats-container">
-      <div class="mini-stat-box">
-        <span class="stat stat-header stat-cases">Cases</span>
-        <span class="stat stat-cases">${this.cases}</span>
+      <div class="stat-box-body" @click=${this.openModal}>
+        <div class="stat-box-body_infobox">
+          <span class="stat stat-header stat-cases">Cases</span>
+          <span class="stat stat-cases">${this.country.cases.total}</span>
+        </div>
+        <div class="stat-box-body_infobox">
+          <span class="stat stat-header stat-deaths">Deaths</span>
+          <progress-bar .total=${this.country.deaths.total} .percentage=${this.getPercentage(this.country.deaths.total)} .progressColor=${'var(--deaths-color)'}></progress-bar>
+        </div>
+        <div class="stat-box-body_infobox">
+          <span class="stat-box-body_infobox_header">Recovered</span>
+          <progress-bar .total=${this.country.cases.recovered} .percentage=${this.getPercentage(this.country.cases.recovered)} .progressColor=${'var(--recovered-color)'}></progress-bar>
+        </div>
       </div>
-      <div class="mini-stat-box">
-        <span class="stat stat-header stat-deaths">Deaths</span>
-        <span class="stat stat-deaths">${this.deaths}</span>
-      </div>
-      <div class="mini-stat-box">
-        <span class="stat stat-header stat-recovered">Recovered</span>
-        <span class="stat stat-recovered">${this.recovered}</span>
-      </div>
-    </div>
     `;
+  }
+
+  openModal() {
+    const modal = this.shadowRoot.querySelector('covid-stat-modal').shadowRoot.getElementById('stat-modal');
+    modal.open();
+    const overlay = this.shadowRoot.querySelector('covid-stat-modal').shadowRoot.getElementById('modal-overlay');
+    overlay.style.display = 'block';
+  }
+
+  getPercentage(num) {
+    const percentage = (num / this.country.cases.total) * 100;
+    return Math.ceil(percentage);
   }
 }
 
