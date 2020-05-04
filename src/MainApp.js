@@ -5,15 +5,14 @@ export class MainApp extends LitElement {
   static get styles() {
     return css`
       :host {
-        --app-primary-color: black;
-        --app-secondary-color: white;
-        --recovered-color: #ACF39D; 
-        --deaths-color: #FF5D73;
-        display: block;
-      }
+        --background-color: #121212;
+        --surface-color: #1E1E1E;
+        --primary-color: #61B1D4;
 
-      app-header-layout {
-        background-color: var(--app-secondary-color);
+        --secondary-color: rgb(256, 256, 256, 0.87);
+        --green-color: #03DAC6;
+        --red-color: #CF6679;
+        display: block;
       }
     `;
   }

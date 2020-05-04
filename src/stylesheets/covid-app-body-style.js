@@ -4,26 +4,62 @@ export default css`
   mil-pulse-spinner {
     --height: 100px;
     --width: 100px;
-    --color1: var(--app-primary-color);
-    --color2: gray;
+    --color1: var(--primary-color);
+    --color2: var(--secondary-color);
+  }
+
+  app-drawer {
+    z-index: 3;
   }
 
   .nav-container {
     height: 60px;
-    color: var(--app-secondary-color);
-    background-color: var(--app-primary-color);
-    z-index: 2;
+    color: var(--secondary-color);
+    background-color: var(--background-color);
   }
 
   #main-content {
     display: flex;
     flex-flow: row wrap;
+    background-color: var(--background-color)
   }
 
   #sentinel {
     width: 1px;
     height: 1px;
     margin-bottom: 20px;
+  }
+
+  #filter-modal {
+    color: white;
+  }
+
+  .filter-modal-header {
+    padding-left: 20px;
+    color: var(--secondary-color);
+  } 
+
+  .filter-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .filter-modal-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-left: 20px;
+  }
+
+  .search-country-input,
+  .sort-country-input {
+    --paper-input-container-color: var(--secondary-color);
+    --paper-input-container-focus-color: var(--secondary-color);
+    --paper-input-container-invalid-color: var(--red-color);
+    --paper-input-container-input-color: var(--secondary-color);
+    align-self: flex-start;
   }
 
   @media only screen and (max-width: 600px) { .main-content { flex-flow: column wrap; } }

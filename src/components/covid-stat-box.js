@@ -3,6 +3,7 @@ import './covid-stat-modal.js';
 import { LitElement, html } from 'lit-element';
 import '@polymer/paper-button/paper-button.js';
 import './progress-bar.js';
+import keyframes from '../stylesheets/animation-keyframes.js';
 import boxCss from '../stylesheets/covid-stat-box-style.js';
 import countriesCode from '../utils/countries.js';
 
@@ -14,7 +15,7 @@ export class CovidStatBox extends LitElement {
   }
 
   static get styles() {
-    return boxCss;
+    return [keyframes, boxCss];
   }
 
   render() {
@@ -23,7 +24,7 @@ export class CovidStatBox extends LitElement {
     const { code: countryCode } = countriesCode.find(({ name }) => (name.toLowerCase().indexOf(this.country.country.toLowerCase()) !== -1));
 
     return html`
-      <covid-stat-modal .countryCode=${countryCode}></covid-stat-modal>
+      ${this._renderModal(countryCode)}
       <div class="stat-box-header" @click=${this.openModal}> 
         <span class="stat-country"> ${this.country.country.toUpperCase()} </span> 
         <img class="country-flag" src="https://www.countryflags.io/${countryCode || 'af'}/flat/64.png">
@@ -35,21 +36,42 @@ export class CovidStatBox extends LitElement {
         </div>
         <div class="stat-box-body_infobox">
           <span class="stat stat-header stat-deaths">Deaths</span>
-          <progress-bar .total=${this.country.deaths.total} .percentage=${this.getPercentage(this.country.deaths.total)} .progressColor=${'var(--deaths-color)'}></progress-bar>
+          <progress-bar .total=${this.country.deaths.total} .percentage=${this.getPercentage(this.country.deaths.total)} .progressColor=${'var(--red-color)'}></progress-bar>
         </div>
         <div class="stat-box-body_infobox">
           <span class="stat-box-body_infobox_header">Recovered</span>
-          <progress-bar .total=${this.country.cases.recovered} .percentage=${this.getPercentage(this.country.cases.recovered)} .progressColor=${'var(--recovered-color)'}></progress-bar>
+          <progress-bar .total=${this.country.cases.recovered} .percentage=${this.getPercentage(this.country.cases.recovered)} .progressColor=${'var(--green-color)'}></progress-bar>
         </div>
       </div>
     `;
   }
 
+  _renderModal(countryCode) {
+    return html`
+      <covid-stat-modal>
+        <div class="stat-modal-header" slot="modal-header">
+          <img class="modal-country-flag" src="https://www.countryflags.io/${countryCode || 'af'}/flat/64.png">  
+          <span class="modal-header_title"> ${this.country.country.toUpperCase()} </span> 
+        </div>
+        <div class="stat-modal-body" slot="modal-body">
+          <span class="stat-modal-body_stat"> Cases: ${this.country.cases.total || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> Active Cases: ${this.country.cases.active || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> New Cases: ${this.country.cases.new || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> Critical: ${this.country.cases.critical || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> Deaths: ${this.country.deaths.total || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> New Deaths: ${this.country.deaths.new || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> Recovered: ${this.country.cases.recovered || 'N.A'}  </span>
+          <span class="stat-modal-body_stat"> Tested:  ${this.country.tests.total || 'N.A'} </span>
+        </div>
+        <div slot="modal-footer">
+          <span class="stat-modal-body_date"> Data as of ${new Date(this.country.day).toLocaleString() || 'N.A'} </span>
+        </div>
+      </covid-stat-modal>
+    `;
+  }
+
   openModal() {
-    const modal = this.shadowRoot.querySelector('covid-stat-modal').shadowRoot.getElementById('stat-modal');
-    modal.open();
-    const overlay = this.shadowRoot.querySelector('covid-stat-modal').shadowRoot.getElementById('modal-overlay');
-    overlay.style.display = 'block';
+    this.shadowRoot.querySelector('covid-stat-modal').style.display = 'block';
   }
 
   getPercentage(num) {

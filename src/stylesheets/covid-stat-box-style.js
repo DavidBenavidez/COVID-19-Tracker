@@ -4,11 +4,12 @@ export default css`
   :host {
     min-height: 200px;
     box-sizing: border-box;
-    background-color: #363946;
-    border: 1.5px solid white;
+    background-color: var(--surface-color);
+    border: 5px solid var(--background-color);
     position: relative;
     display: flex;
-    flex-basis: 25%;
+    min-width: 25%;
+    flex-grow: 1;
     flex-flow: column wrap;
     animation: .25s createBox;
     cursor: pointer;
@@ -27,8 +28,7 @@ export default css`
     letter-spacing: 1.5px;
     width: 250px;
     font-family: 'Montserrat', sans-serif;
-    color: white;
-    z-index: 2;
+    color: var(--secondary-color);
     font-size: 16px;
   }
 
@@ -48,19 +48,50 @@ export default css`
   .stat-box-body_infobox {
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--secondary-color);
     width: 90%;
     height: 30%;
     flex-flow: row wrap;
     justify-content: space-between;
   }
 
-  @keyframes createBox {
-    from {
-      transform: scale(0);
-    }
-    to {
-      transform: scale(1);
-    }
+  .stat-modal-header {
+    min-height: 100%;
+    min-width: 40%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .modal-header_title {
+    color: var(--green-color);
+    letter-spacing: 1.5px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .modal-country-flag {
+    align-self: center;
+  }
+
+  .stat-modal-body {
+    display: flex;
+    height: 100%;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 20px;
+  }
+
+  .stat-modal-body_stat {
+    color: var(--secondary-color);
+  }
+
+  .stat-modal-body_date {
+    font-size: 9px;
+    color: var(--secondary-color);
+    padding-left: 20px;
   }
 `;

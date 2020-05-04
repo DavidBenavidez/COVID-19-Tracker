@@ -2,6 +2,7 @@ import { CovidAppBody } from './covid-app-body.js';
 
 export class CovidAppBodyConnected extends CovidAppBody {
   async getStatistics() {
+    this.isLoading = true;
     const res = await fetch(
       'https://covid-193.p.rapidapi.com/statistics',
       {

@@ -5,24 +5,77 @@ export default css`
       align-self: center;
       font-weight: 900px;
       letter-spacing: 1px;
+      color: var(--green-color)
     }
 
-    .nav-container .nav-container_button {
-      --paper-icon-button-ink-color: var(--app-secondary-color);
+    .nav-container_button {
+      --paper-icon-button-ink-color: var(--secondary-color);
     }
 
-    .nav-container .nav-container_input {
-      --paper-input-container-color: var(--app-secondary-color);
-      --paper-input-container-focus-color: var(--app-secondary-color);
-      --paper-input-container-invalid-color: red;
-      --paper-input-container-input-color: var(--app-secondary-color);
+    .nav-container_input,
+    .nav-container_dropdown {
+      --paper-input-container-color: var(--secondary-color);
+      --paper-input-container-focus-color: var(--secondary-color);
+      --paper-input-container-invalid-color: var(--red-color);
+      --paper-input-container-input-color: var(--secondary-color);
     }
 
-    .nav-container .nav-container_dropdown {
+    .nav-container_dropdown {
       margin-left: 8px;
-      --paper-input-container-color: white;
-      --paper-input-container-focus-color: white;
-      --paper-input-container-invalid-color: red;
-      --paper-input-container-input-color: white;
+    }
+
+    @media only screen and (max-width: 600px) { 
+      .toggle-drawer { display: block; }
+      
+      .main-title,
+      .nav-container_button,
+      .nav-container_input,
+      .nav-container_dropdown {
+        display: none;
+      }
+    }
+
+    @media only screen and (min-width: 600px) { 
+      .toggle-drawer { display: block; }
+
+      .main-title,
+      .nav-container_button,
+      .nav-container_input,
+      .nav-container_dropdown {
+        display: none;
+      }
+    }
+
+    @media only screen and (min-width: 768px) { 
+      .toggle-drawer { display: none; }
+
+      .main-title,
+      .nav-container_button,
+      .nav-container_input,
+      .nav-container_dropdown {
+        display: block;
+      }
+    }
+
+    @media only screen and (min-width: 992px) { 
+      .toggle-drawer { display: none; }
+
+      .main-title,
+      .nav-container_button,
+      .nav-container_input,
+      .nav-container_dropdown {
+        display: block;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) { 
+      .toggle-drawer { display: none; }
+
+      .main-title,
+      .nav-container_button,
+      .nav-container_input,
+      .nav-container_dropdown {
+        display: block;
+      }
     }
   `;

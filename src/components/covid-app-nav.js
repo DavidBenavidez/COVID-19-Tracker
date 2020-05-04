@@ -27,6 +27,7 @@ export class CovidAppNav extends LitElement {
   render() {
     return html`
       <app-toolbar class="nav-container">
+        <paper-icon-button class="toggle-drawer" icon="menu" @click=${this.toggleDrawer}></paper-icon-button>
         <div main-title class="main-title">COVID-19 Tracker</div>
 
         <paper-icon-button class="nav-container_button" icon="search"></paper-icon-button>
@@ -41,6 +42,11 @@ export class CovidAppNav extends LitElement {
         </paper-dropdown-menu>
       </app-toolbar>
     `;
+  }
+
+  toggleDrawer() {
+    const event = new CustomEvent('toggleDrawer');
+    this.dispatchEvent(event);
   }
 
   searchCountryKeyUp() {
