@@ -30,11 +30,8 @@ export default css`
     margin-bottom: 20px;
   }
 
-  #filter-modal {
-    color: white;
-  }
-
-  .filter-modal-header {
+  .filter-modal-header,
+  .statistics-modal-header {
     padding-left: 20px;
     color: var(--secondary-color);
   } 
@@ -45,16 +42,37 @@ export default css`
     align-items: center;
   }
 
-  .filter-modal-body {
+  .filter-modal-footer_button {
+    color: var(--primary-color);
+  }
+
+  .filter-modal-body,
+  .statistics-modal-body {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
     margin-left: 20px;
+    color: var(--secondary-color);
+    overflow: auto;
+  }
+  
+  .world-stat_value {
+    font-weight: bold;
+    font-size: 32px;
   }
 
-  .search-country-input,
-  .sort-country-input {
+  .world-stat_label {
+    color: var(--primary-color);
+  }
+
+  .world-stat_date {
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  #search-country-input,
+  #sort-country-input {
     --paper-input-container-color: var(--secondary-color);
     --paper-input-container-focus-color: var(--secondary-color);
     --paper-input-container-invalid-color: var(--red-color);
@@ -62,8 +80,10 @@ export default css`
     align-self: flex-start;
   }
 
-  nega-autocomplete.styled {
-    width: 50%;
+  #country-suggestions {
+    margin-left: 25px;
+    margin-top: 85px;
+    --suggestions-wrapper: black;
     color: var(--primary-color);
   }
 
@@ -77,7 +97,6 @@ export default css`
   @media only screen and (min-width: 768px) { .main-content { flex-flow: column wrap; } }
   @media only screen and (min-width: 992px) { .main-content { flex-flow: row wrap; } }
   @media only screen and (min-width: 1200px) { .main-content { flex-flow: row wrap; } }
-
   
   @media (prefers-color-scheme: dark) {
     .nav-container {
@@ -87,6 +106,10 @@ export default css`
 
     nega-autocomplete.styled {
       color: var(--secondary-color);
+    }
+
+    .filter-modal-footer_button {
+      color: var(--primary-color);
     }
   }
 `;

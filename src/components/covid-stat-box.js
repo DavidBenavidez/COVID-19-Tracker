@@ -6,6 +6,7 @@ import './progress-bar.js';
 import keyframes from '../stylesheets/animation-keyframes.js';
 import boxCss from '../stylesheets/covid-stat-box-style.js';
 import countriesCode from '../utils/countries.js';
+import { getPercentage, numberWithCommas } from '../utils/utils.js';
 
 export class CovidStatBox extends LitElement {
   static get properties() {
@@ -32,15 +33,15 @@ export class CovidStatBox extends LitElement {
       <div class="stat-box-body" @click=${this.openModal}>
         <div class="stat-box-body_infobox">
           <span class="stat stat-header stat-cases">Cases</span>
-          <span class="stat stat-cases">${this.country.cases.total}</span>
+          <span class="stat stat-cases">${numberWithCommas(this.country.cases.total)}</span>
         </div>
         <div class="stat-box-body_infobox">
           <span class="stat stat-header stat-deaths">Deaths</span>
-          <progress-bar .total=${this.country.deaths.total} .percentage=${this.getPercentage(this.country.deaths.total)} .progressColor=${'var(--red-color)'}></progress-bar>
+          <progress-bar .total=${numberWithCommas(this.country.deaths.total)} .percentage=${getPercentage(this.country.deaths.total, this.country.cases.total)} .progressColor=${'var(--red-color)'}></progress-bar>
         </div>
         <div class="stat-box-body_infobox">
           <span class="stat-box-body_infobox_header">Recovered</span>
-          <progress-bar .total=${this.country.cases.recovered} .percentage=${this.getPercentage(this.country.cases.recovered)} .progressColor=${'var(--green-color)'}></progress-bar>
+          <progress-bar .total=${numberWithCommas(this.country.cases.recovered)} .percentage=${getPercentage(this.country.cases.recovered, this.country.cases.total)} .progressColor=${'var(--green-color)'}></progress-bar>
         </div>
       </div>
     `;
@@ -72,11 +73,6 @@ export class CovidStatBox extends LitElement {
 
   openModal() {
     this.shadowRoot.querySelector('covid-stat-modal').style.display = 'block';
-  }
-
-  getPercentage(num) {
-    const percentage = (num / this.country.cases.total) * 100;
-    return Math.ceil(percentage);
   }
 }
 

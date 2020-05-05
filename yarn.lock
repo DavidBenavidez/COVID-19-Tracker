@@ -2,6 +2,43 @@
 # yarn lockfile v1
 
 
+"@advanced-rest-client/arc-fit-mixin@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@advanced-rest-client/arc-fit-mixin/-/arc-fit-mixin-1.0.3.tgz#384cd21645f65849d6e09472de58bf25dc56fcea"
+  integrity sha512-2kwxnyZ9nUDRNC+4XVCz6fU+HyOK7X8s9qcGf3oL3/JlLUGyF3JTgQ+NrZBBmkWT/VMdyAZDEKb0SBhDqbD51w==
+
+"@advanced-rest-client/arc-overlay-mixin@^1.0.3":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@advanced-rest-client/arc-overlay-mixin/-/arc-overlay-mixin-1.0.4.tgz#28beeace688279ea471721c209d22238f3fa2d82"
+  integrity sha512-BGbD0DIzbwWEbwb+3XbDXAGKUFqW5Gy+m6naSCirIso+j+H85lpcEa5Vv5XouIYVqXXD+z7TiHXy/PInWjO87w==
+  dependencies:
+    "@advanced-rest-client/arc-fit-mixin" "^1.0.2"
+    "@advanced-rest-client/arc-resizable-mixin" "^1.0.0"
+
+"@advanced-rest-client/arc-resizable-mixin@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@advanced-rest-client/arc-resizable-mixin/-/arc-resizable-mixin-1.0.0.tgz#4117b092f96884080aa98ece4ee45efc057b9c6c"
+  integrity sha512-xQFafw0mk/6MHBLQSZ9YLLRJ7jb+wZsmAnAAqdrurjSIAQWxmKajLd7EaLhtup3spKGLGvI3xHk2ahyQ7xxbPQ==
+
+"@advanced-rest-client/arc-scroll-target-mixin@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@advanced-rest-client/arc-scroll-target-mixin/-/arc-scroll-target-mixin-1.0.2.tgz#6cafc79fd844d3629722ee678963f0d3ba5d8920"
+  integrity sha512-RoIU/2Mboa04cZMwypPr3Foc0fTkftRyhHXPdXu/F0/rzH2LW+j1LD9vGXz0kUr7HeAoIrR/ApCFNYA+0XTLnA==
+
+"@advanced-rest-client/paper-autocomplete@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@advanced-rest-client/paper-autocomplete/-/paper-autocomplete-3.1.1.tgz#5e7f5d6bc44682b92a5856a142bec3b0e186fcfa"
+  integrity sha512-fhJbg1I7qAQ7uXRZJBw2A1p+B8fqkgp0NRaaQFu5UutMJx0PTchGJYdHX/2og4PnhiDFO/j2Du9AgZWywKLYRQ==
+  dependencies:
+    "@advanced-rest-client/arc-overlay-mixin" "^1.0.3"
+    "@advanced-rest-client/arc-scroll-target-mixin" "^1.0.2"
+    "@polymer/iron-a11y-keys" "^3.0.0"
+    "@polymer/iron-selector" "^3.0.0"
+    "@polymer/paper-item" "^3.0.0"
+    "@polymer/paper-progress" "^3.0.0"
+    "@polymer/paper-ripple" "^3.0.0"
+    lit-element "^2.0.1"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -926,6 +963,14 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
+"@polymer/iron-a11y-keys@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-a11y-keys/-/iron-a11y-keys-3.0.1.tgz#bd59613c27248f7e516bbe389087d01be9396e9c"
+  integrity sha512-zmTi8xHeY4ZMJLAitW2hAmW5zXZ35hVy/eHQUFadAlOccuBK3oRRmoPRQRaZgpyJrCVFDAQRXXzzJtUDil/0CA==
+  dependencies:
+    "@polymer/iron-a11y-keys-behavior" "^3.0.0-pre.26"
+    "@polymer/polymer" "^3.0.0"
+
 "@polymer/iron-autogrow-textarea@^3.0.0-pre.26":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@polymer/iron-autogrow-textarea/-/iron-autogrow-textarea-3.0.3.tgz#b75dbebc23ce47d428a26156709d4a8a4c05823e"
@@ -1053,6 +1098,13 @@
     "@polymer/iron-resizable-behavior" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
+"@polymer/iron-range-behavior@^3.0.0-pre.26":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-range-behavior/-/iron-range-behavior-3.0.1.tgz#0aba35addb0a390bd3eafc307c35389cddbe8677"
+  integrity sha512-+jtL9v45M/T1RJleWyQaNH84S9/mIIR+AjNbYIttbKGp1eG+98j8MDWe7LXNtg79V2LQnE/+VS82cBeELyGVeg==
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
 "@polymer/iron-resizable-behavior@^3.0.0-pre.26":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@polymer/iron-resizable-behavior/-/iron-resizable-behavior-3.0.1.tgz#e284348ed7c1c7e263f7039297532fa954025ea2"
@@ -1067,7 +1119,7 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-selector@^3.0.0-pre.26":
+"@polymer/iron-selector@^3.0.0", "@polymer/iron-selector@^3.0.0-pre.26":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@polymer/iron-selector/-/iron-selector-3.0.1.tgz#e845bec58489c96b4e7609525532437869ad5a88"
   integrity sha512-sBVk2uas6prW0glUe2xEJJYlvxmYzM40Au9OKbfDK2Qekou/fLKcBRyIYI39kuI8zWRaip8f3CI8qXcUHnKb1A==
@@ -1151,7 +1203,7 @@
     "@polymer/paper-styles" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/paper-item@^3.0.1":
+"@polymer/paper-item@^3.0.0", "@polymer/paper-item@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@polymer/paper-item/-/paper-item-3.0.1.tgz#05b3543483e556cd5532431cd1751a84343989b5"
   integrity sha512-KTk2N+GsYiI/HuubL3sxebZ6tteQbBOAp4QVLAnbjSPmwl+mJSDWk+omuadesU0bpkCwaWVs3fHuQsmXxy4pkw==
@@ -1184,7 +1236,17 @@
     "@polymer/paper-styles" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/paper-ripple@^3.0.0-pre.26":
+"@polymer/paper-progress@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-progress/-/paper-progress-3.0.1.tgz#2943054a909ad381236b3c7aecee078123bba839"
+  integrity sha512-5nguG+tmnyoaWKVNG8Smtno2uLSPBgEsT3f20JY8yJTjUBYWaqa8E3l5RLkTRXgA4x9OnvLb8/CdlQWXQIogBg==
+  dependencies:
+    "@polymer/iron-flex-layout" "^3.0.0-pre.26"
+    "@polymer/iron-range-behavior" "^3.0.0-pre.26"
+    "@polymer/paper-styles" "^3.0.0-pre.26"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/paper-ripple@^3.0.0", "@polymer/paper-ripple@^3.0.0-pre.26":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@polymer/paper-ripple/-/paper-ripple-3.0.2.tgz#52566f5ee367942022ceaa991368105d21403de5"
   integrity sha512-DnLNvYIMsiayeICroYxx6Q6Hg1cUU8HN2sbutXazlemAlGqdq80qz3TIaVdbpbt/pvjcFGX2HtntMlPstCge8Q==

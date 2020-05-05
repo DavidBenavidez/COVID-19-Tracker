@@ -1,3 +1,4 @@
+import './covid-stat-modal.js';
 import { LitElement, html } from 'lit-element';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
@@ -30,6 +31,7 @@ export class CovidAppNav extends LitElement {
         <paper-icon-button class="toggle-drawer" icon="menu" @click=${this.toggleDrawer}></paper-icon-button>
         <div main-title class="main-title">COVID-19 Tracker</div>
 
+        <paper-icon-button class="nav-container_button" icon="language" @click=${this.showStatisticsModal}></paper-icon-button>
         <paper-icon-button class="nav-container_button" icon="search"></paper-icon-button>
         <paper-input class="nav-container_input" always-float-label label="Country Name" name="country" @keyup=${this.searchCountryKeyUp} @keydown=${this.searchCountryKeyDown}></paper-input>
         <paper-dropdown-menu class="nav-container_dropdown" label="Sort By">
@@ -42,6 +44,10 @@ export class CovidAppNav extends LitElement {
         </paper-dropdown-menu>
       </app-toolbar>
     `;
+  }
+
+  showStatisticsModal() {
+    this.dispatchEvent(new CustomEvent('showStatisticsModal'));
   }
 
   toggleDrawer() {

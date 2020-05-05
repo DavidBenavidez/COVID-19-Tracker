@@ -80,7 +80,6 @@ export default css`
     flex-flow: column wrap;
     justify-content: space-around;
     font-size: 16px;
-    letter-spacing: 1.5px;
     font-family: 'Roboto', sans-serif;
     padding-left: 20px;
   }
