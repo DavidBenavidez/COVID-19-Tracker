@@ -19,7 +19,7 @@ export default css`
     }
 
     .modal-container {
-      background-color: var(--surface-color);
+      background-color: var(--surface-color-lighter);
       position: fixed;
       height: 50vh;
       width: 400px;
@@ -49,7 +49,7 @@ export default css`
     }
 
     .modal-close {
-      color: var(--app-secondary-color);
+      color: var(--secondary-color);
       position: absolute;
       right: 0;
     }
@@ -97,5 +97,11 @@ export default css`
         width: 400px;
         margin-left: -200px;
       } 
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .modal-container {
+        background-color: var(--surface-color);
+      }
     }
   `;

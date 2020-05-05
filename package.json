@@ -67,6 +67,7 @@
     "lit-element": "^2.0.1",
     "lit-html": "^1.0.0",
     "mil-pulse-spinner": "^1.0.1",
+    "nega-autocomplete": "^0.2.4",
     "web-animations-js": "^2.3.2"
   }
 }

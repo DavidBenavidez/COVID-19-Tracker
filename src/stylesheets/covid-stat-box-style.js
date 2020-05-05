@@ -65,7 +65,7 @@ export default css`
   }
 
   .modal-header_title {
-    color: var(--green-color);
+    color: var(--primary-color);
     letter-spacing: 1.5px;
     font-family: 'Montserrat', sans-serif;
   }
@@ -79,7 +79,7 @@ export default css`
     height: 100%;
     flex-flow: column wrap;
     justify-content: space-around;
-    font-size: 12px;
+    font-size: 16px;
     letter-spacing: 1.5px;
     font-family: 'Roboto', sans-serif;
     padding-left: 20px;
@@ -90,8 +90,63 @@ export default css`
   }
 
   .stat-modal-body_date {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--secondary-color);
     padding-left: 20px;
+    font-style: italic;
+  }
+
+  @media only screen and (max-width: 600px) { 
+    .stat-modal-body {
+      font-size: 12px;
+    }
+
+    .stat-modal-body_date {
+      font-size: 9px;
+    }
+  }
+
+  @media only screen and (min-width: 600px) { 
+    .stat-modal-body {
+      font-size: 12px;
+    }
+
+    .stat-modal-body_date {
+      font-size: 9px;
+    }
+  }
+
+  @media only screen and (min-width: 768px) { 
+    .stat-modal-body {
+      font-size: 16px;
+    }
+
+    .stat-modal-body_date {
+      font-size: 12px;
+    }
+  }
+  
+  @media only screen and (min-width: 992px) { 
+    .stat-modal-body {
+      font-size: 16px;
+    }
+
+    .stat-modal-body_date {
+      font-size: 12px;
+    }
+  }
+  
+  @media only screen and (min-width: 1200px) { 
+    .stat-modal-body {
+      font-size: 16px;
+    }
+
+    .stat-modal-body_date {
+      font-size: 12px;
+    }
+
+    .modal-header_title {
+      color: var(--green-color);
+    }
   }
 `;

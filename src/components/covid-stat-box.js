@@ -54,16 +54,16 @@ export class CovidStatBox extends LitElement {
           <span class="modal-header_title"> ${this.country.country.toUpperCase()} </span> 
         </div>
         <div class="stat-modal-body" slot="modal-body">
-          <span class="stat-modal-body_stat"> Cases: ${this.country.cases.total || 'N.A'} </span>
-          <span class="stat-modal-body_stat"> Active Cases: ${this.country.cases.active || 'N.A'} </span>
-          <span class="stat-modal-body_stat"> New Cases: ${this.country.cases.new || 'N.A'} </span>
-          <span class="stat-modal-body_stat"> Critical: ${this.country.cases.critical || 'N.A'} </span>
-          <span class="stat-modal-body_stat"> Deaths: ${this.country.deaths.total || 'N.A'} </span>
-          <span class="stat-modal-body_stat"> New Deaths: ${this.country.deaths.new || 'N.A'} </span>
-          <span class="stat-modal-body_stat"> Recovered: ${this.country.cases.recovered || 'N.A'}  </span>
-          <span class="stat-modal-body_stat"> Tested:  ${this.country.tests.total || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> Cases: </b> ${this.country.cases.total || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> Active Cases: </b> ${this.country.cases.active || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> New Cases: </b> ${this.country.cases.new || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> Critical: </b> ${this.country.cases.critical || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> Deaths: </b> ${this.country.deaths.total || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> New Deaths: </b> ${this.country.deaths.new || 'N.A'} </span>
+          <span class="stat-modal-body_stat"> <b> Recovered: </b> ${this.country.cases.recovered || 'N.A'}  </span>
+          <span class="stat-modal-body_stat"> <b> Tested: </b> ${this.country.tests.total || 'N.A'} </span>
         </div>
-        <div slot="modal-footer">
+        <div slot="modal-footer" class="stat-modal-footer">
           <span class="stat-modal-body_date"> Data as of ${new Date(this.country.day).toLocaleString() || 'N.A'} </span>
         </div>
       </covid-stat-modal>

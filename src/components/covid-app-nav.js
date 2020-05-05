@@ -6,7 +6,7 @@ import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
-import navCss from '../stylesheets/covid-app-nav-style';
+import navCss from '../stylesheets/covid-app-nav-style.js';
 
 export class CovidAppNav extends LitElement {
   static get properties() {
@@ -33,7 +33,7 @@ export class CovidAppNav extends LitElement {
         <paper-icon-button class="nav-container_button" icon="search"></paper-icon-button>
         <paper-input class="nav-container_input" always-float-label label="Country Name" name="country" @keyup=${this.searchCountryKeyUp} @keydown=${this.searchCountryKeyDown}></paper-input>
         <paper-dropdown-menu class="nav-container_dropdown" label="Sort By">
-          <paper-listbox slot="dropdown-content" id="sort_countries_dropdown" @iron-select=${this.updateSorter}>
+          <paper-listbox slot="dropdown-content" class="dropdown-content" @iron-select=${this.updateSorter}>
             <paper-item value="Default">Default</paper-item>
             <paper-item value="Cases">Cases</paper-item>
             <paper-item value="Recovered">Recovered</paper-item>

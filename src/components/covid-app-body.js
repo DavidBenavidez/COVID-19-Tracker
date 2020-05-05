@@ -3,6 +3,7 @@ import './covid-stat-box.js';
 import './covid-stat-modal.js';
 import { LitElement, html } from 'lit-element';
 import 'mil-pulse-spinner';
+import 'nega-autocomplete/nega-autocomplete.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
@@ -17,6 +18,7 @@ export class CovidAppBody extends LitElement {
   static get properties() {
     return {
       countries: { type: Array },
+      countryNames: { type: Array },
       filter: { type: String },
       loaded: { type: Number },
       isLoading: { type: Boolean },
@@ -27,6 +29,7 @@ export class CovidAppBody extends LitElement {
   constructor() {
     super();
     this.countries = [];
+    this.countryNames = [];
     this.filter = '';
     this.sorter = '';
     this.loaded = 1;
@@ -36,6 +39,7 @@ export class CovidAppBody extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.getStatistics();
+    this.getCountryNames();
   }
 
   updated() {
@@ -104,15 +108,18 @@ export class CovidAppBody extends LitElement {
   }
 
   _renderFilterModal() {
+    console.log(this.countryNames);
     return html`
       <covid-stat-modal id="filter-modal">
         <div slot="modal-header" class="filter-modal-header">
           <h2> Filter Countries </h2>
         </div>
         <div slot="modal-body" class="filter-modal-body">
-          <paper-input class="search-country-input" always-float-label label="Country Name" name="country"></paper-input>\
+          <nega-autocomplete class="styled" items=${JSON.stringify(this.countryNames)}>
+            <paper-input class="search-country-input" always-float-label label="Country Name" name="country"></paper-input>\
+          </nega-autocomplete>
           <paper-dropdown-menu class="sort-country-input" label="Sort By" id="sort-country-dropdown">
-            <paper-listbox slot="dropdown-content">
+            <paper-listbox slot="dropdown-content" class="dropdown-content">
               <paper-item value="Default">Default</paper-item>
               <paper-item value="Cases">Cases</paper-item>
               <paper-item value="Recovered">Recovered</paper-item>
@@ -152,6 +159,10 @@ export class CovidAppBody extends LitElement {
 
   getStatistics() {
     console.log('Fetch COVID-19 Statistics');
+  }
+
+  getCountryNames() {
+    console.log('fetch country names');
   }
 
   updateFilter({ detail: { filterValue } }) {
