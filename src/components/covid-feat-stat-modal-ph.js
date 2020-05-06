@@ -1,14 +1,9 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html } from 'lit-element';
+
 import keyframes from '../stylesheets/animation-keyframes.js';
-import statModalCSS from '../stylesheets/covid-stat-modal-style.js';
+import statModalCSS from '../stylesheets/stat-modal-style.js';
 
-export class CovidStatModal extends LitElement {
-  static get properties() {
-    return {
-      country: { type: Object },
-    };
-  }
-
+export class StatModal extends LitElement {
   static get styles() {
     return [keyframes, statModalCSS];
   }
@@ -33,8 +28,8 @@ export class CovidStatModal extends LitElement {
   }
 
   closeModal() {
-    this.style.display = 'none';
+    this.dispatchEvent(new CustomEvent('close'));
   }
 }
 
-customElements.define('covid-stat-modal', CovidStatModal);
+customElements.define('stat-modal', StatModal);

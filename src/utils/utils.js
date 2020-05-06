@@ -6,3 +6,8 @@ export const getPercentage = function getPercentageForProgressbars(num, total) {
 export const numberWithCommas = function convertNumberToCommasWithRegex(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
+
+export const addDebounce = function delayFunctionTrigger(timer, ms, func) {
+  clearTimeout(timer);
+  setTimeout(func, ms);
+};

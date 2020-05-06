@@ -19,5 +19,6 @@ export default css`
     position: absolute;
     color: black;    
     left: 60%;
+    font-weight: 700;
   }
   `;

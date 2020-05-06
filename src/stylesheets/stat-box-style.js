@@ -28,7 +28,7 @@ export default css`
     letter-spacing: 1.5px;
     width: 250px;
     font-family: 'Montserrat', sans-serif;
-    color: var(--secondary-color);
+    color: var(--on-surface-color);
     font-size: 16px;
   }
 
@@ -48,7 +48,7 @@ export default css`
   .stat-box-body_infobox {
     display: flex;
     align-items: center;
-    color: var(--secondary-color);
+    color: var(--on-surface-color);
     width: 90%;
     height: 30%;
     flex-flow: row wrap;
@@ -65,7 +65,7 @@ export default css`
   }
 
   .modal-header_title {
-    color: var(--primary-color);
+    color: var(--on-surface-color);
     letter-spacing: 1.5px;
     font-family: 'Montserrat', sans-serif;
   }
@@ -85,7 +85,7 @@ export default css`
   }
 
   .stat-modal-body_stat {
-    color: var(--secondary-color);
+    color: var(--on-surface-color);
   }
 
   .stat-modal-body_date {
@@ -143,9 +143,11 @@ export default css`
     .stat-modal-body_date {
       font-size: 12px;
     }
+  }
 
+  @media (prefers-color-scheme: dark) { 
     .modal-header_title {
-      color: var(--green-color);
+      color: var(--primary-color);
     }
   }
 `;

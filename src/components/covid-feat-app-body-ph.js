@@ -1,32 +1,52 @@
 import '@advanced-rest-client/paper-autocomplete/paper-autocomplete.js';
-import './covid-app-nav.js';
-import './covid-stat-box.js';
-import './covid-stat-modal.js';
 import { LitElement, html } from 'lit-element';
+import { router } from 'lit-element-router';
 import 'mil-pulse-spinner';
-import 'nega-autocomplete/nega-autocomplete.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
-import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/app-layout/app-header/app-header.js';
+import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import './progress-bar.js';
-import bodyCss from '../stylesheets/covid-app-body-style.js';
 import { numberWithCommas } from '../utils/utils.js';
 
-export class CovidAppBody extends LitElement {
+import './covid-feat-app-nav-ph.js';
+import './covid-feat-covid-news-ph-connected.js';
+import './covid-feat-route-content-ph.js';
+import './covid-feat-route-link-ph.js';
+import './covid-feat-stat-box-ph.js';
+import './covid-feat-stat-modal-ph.js';
+
+import bodyCss from '../stylesheets/app-body-style.js';
+
+export class AppBody extends router(LitElement) {
   static get properties() {
     return {
       countries: { type: Array },
       countryNames: { type: Array },
       filter: { type: String },
       loaded: { type: Number },
+      isFilterOpen: { type: Boolean },
       isLoading: { type: Boolean },
+      isStatisticsOpen: { type: Boolean },
       sorter: { type: String },
+      route: { type: String },
+      params: { type: Object },
+      query: { type: Object },
     };
+  }
+
+  static get routes() {
+    return [{
+      name: 'home',
+      pattern: '',
+      data: { title: 'Home' },
+    }, {
+      name: 'news',
+      pattern: 'news',
+    }, {
+      name: '404',
+      pattern: '*',
+    }];
   }
 
   constructor() {
@@ -35,8 +55,20 @@ export class CovidAppBody extends LitElement {
     this.countryNames = [];
     this.filter = '';
     this.sorter = '';
-    this.loaded = 1;
+    this.loaded = 21;
+    this.isFilterOpen = false;
     this.isLoading = true;
+    this.isStatisticsOpen = false;
+
+    this.route = '';
+    this.params = {};
+    this.query = {};
+  }
+
+  router(route, params, query) {
+    this.route = route;
+    this.params = params;
+    this.query = query;
   }
 
   connectedCallback() {
@@ -45,14 +77,20 @@ export class CovidAppBody extends LitElement {
     this.getCountryNames();
   }
 
-  updated() {
+  updated(changedProps) {
+    if (super.updated) {
+      super.updated(changedProps);
+    }
+
     const sentinel = this.shadowRoot.getElementById('sentinel');
 
     if (sentinel) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.intersectionRatio > 0) {
-            this.loaded += 12;
+            setTimeout(() => {
+              this.loaded += 12;
+            }, 500);
           }
         });
       });
@@ -61,8 +99,11 @@ export class CovidAppBody extends LitElement {
     }
 
     const ac = this.shadowRoot.getElementById('country-suggestions');
-    ac.target = this.shadowRoot.getElementById('search-country-input');
-    ac.source = this.countryNames;
+
+    if (ac) {
+      ac.target = this.shadowRoot.getElementById('search-country-input');
+      ac.source = this.countryNames;
+    }
   }
 
   static get styles() {
@@ -73,37 +114,43 @@ export class CovidAppBody extends LitElement {
     // filter countries to render
     let countries = this.countries.filter(({ country }) => {
       const searchFilter = (country.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1);
-      if (searchFilter && country !== 'All') {
-        return true;
-      }
-      return false;
+      return (searchFilter && country !== 'All');
     });
 
-    this.sortCountries(countries);
-    countries = !countries ? this.countries : countries;
-    countries = countries.slice(0, this.loaded);
+    countries = this.sortCountries(countries);
+
+    if (countries) {
+      countries = !countries ? this.countries : countries;
+      countries = countries.slice(0, this.loaded);
+    }
 
     if (this.isLoading) {
-      return html`<mil-pulse-spinner id="myMilPulseSpinner"></mil-pulse-spinner>`;
+      return html`<mil-pulse-spinner id="app-body-loader"></mil-pulse-spinner>`;
     }
 
     return html`
       ${this._renderAppDrawer()}
-      ${this._renderFilterModal()}
-      ${this._renderStatisticsModal()}
+      ${this.isFilterOpen ? this._renderFilterModal() : null}
+      ${this.isStatisticsOpen ? this._renderStatisticsModal() : null}
+
       <app-header-layout has-scrolling-region fullbleed>
         <app-header class="nav-container" slot="header" fixed effects="waterfall">
-          <covid-app-nav 
-            @showStatisticsModal=${this.openStatisticsModal}
-            @toggleDrawer=${this.toggleDrawer}
-            @updateSorter=${this.updateSorter}
-            @keyboardUp=${this.updateFilter}
+          <app-nav
+            @show-stat-modal=${this.openStatisticsModal}
+            @toggle-drawer=${this.toggleDrawer}
+            @update-sorter=${this.updateSorter}
+            @update-filter=${this.updateFilter}
+            .route = ${this.route}
           >
-          </covid-app-nav>
+            <route-link slot="route-link" href="${this.route === 'home' ? '/news' : '/'}" @toggle-link=${this.toggleLink}>
+              <img src="${this.route === 'home' ? 'https://i.ibb.co/DMBK0kn/earth-icon-1-min.png' : 'https://i.ibb.co/KLn5jBS/grid.png'}" alt="Switch" id="route-link">
+            </route-link>
+          </app-nav>
         </app-header>
-        <div id="main-content">
-          ${this._mapCountries(countries)}
-        </div>
+        <route-content active-route=${this.route}>
+          <div route="home" id="home-content"> ${this._mapCountries(countries)} </div>
+          <covid-news-connected .countryNames=${this.countryNames} route="news" id="news-content"></covid-news-connected>
+        </route-content>
       </app-header-layout>
     `;
   }
@@ -113,40 +160,46 @@ export class CovidAppBody extends LitElement {
       <app-drawer>
         <app-toolbar>COVID-19 Tracker</app-toolbar>
         <paper-button @click=${this.openFilterModal}> Filter Countries </paper-button>
+        <paper-button @click=${this.openStatisticsModalFromDrawer}> Show World Statistics </paper-button>
       </app-drawer>
     `;
   }
 
   _renderFilterModal() {
     return html`
-      <covid-stat-modal id="filter-modal">
+      <stat-modal ?shown=${this.isFilterOpen} @close=${this.closeFilterModal}>
         <div slot="modal-header" class="filter-modal-header">
           <h2> Filter Countries </h2>
         </div>
         <div slot="modal-body" class="filter-modal-body">
           <paper-input id="search-country-input" always-float-label label="Country Name" name="country"></paper-input>\
           <paper-autocomplete id="country-suggestions"></paper-autocomplete>
-          <paper-dropdown-menu id="sort-country-input" label="Sort By">
-            <paper-listbox slot="dropdown-content" class="dropdown-content">
-              <paper-item value="Default">Default</paper-item>
-              <paper-item value="Cases">Cases</paper-item>
-              <paper-item value="Recovered">Recovered</paper-item>
-              <paper-item value="Deaths">Deaths</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+          <label for="sort-country-input">
+            <select id="sort-country-input">
+              <option value="" disabled selected hidden>Sort Countries By</option>    
+              <option value="Default">Default</option>
+              <option value="Cases">Cases</option>
+              <option value="Recovered">Recovered</option>
+              <option value="Deaths">Deaths</option>
+            </select>
+          </label>
         </div>
         <div slot="modal-footer" class="filter-modal-footer">
           <paper-button @click=${this.applyFilter} class="filter-modal-footer_button"> Apply </paper-button>
         </div>
-      </covid-stat-modal>
+      </stat-modal>
     `;
   }
 
   _renderStatisticsModal() {
     const worldStatistics = this.countries.find(({ country }) => country === 'All');
 
+    if (!worldStatistics) {
+      return;
+    }
+
     return html`
-      <covid-stat-modal id="statistics-modal">
+      <stat-modal ?shown=${this.isStatisticsOpen} @close=${this.closeStatisticsModal}>
         <div slot="modal-header" class="statistics-modal-header">
           <h2> World Statistics </h2>
         </div>
@@ -169,43 +222,68 @@ export class CovidAppBody extends LitElement {
           <span class="world-stat_date"> Data as of ${worldStatistics.time} </span>
         </div>
         <div slot="modal-footer" class="statistics-modal-footer"></div>
-      </covid-stat-modal>
+      </stat-modal>
     `;
   }
 
   _mapCountries(countries) {
     return html`${countries.map((country, index) => {
-      if (index === (this.loaded - 1)) return html`<div id="sentinel"></div>`;
-      if (country.country !== 'All') {
-        return html`
-        <covid-stat-box
-          .country=${country}
-        ><covid-stat-box>`;
+      if (index === (this.loaded - 1)) {
+        return html`<div id="sentinel">
+          <mil-pulse-spinner id="lazy-loading-loader"></mil-pulse-spinner>
+        </div>`;
       }
+      return html`
+        <stat-box
+          .country=${country}
+        ><stat-box>
+      `;
     })}`;
+  }
+
+  toggleLink() {
+    const link = this.shadowRoot.querySelector('route-link');
+    const icon = this.shadowRoot.getElementById('route-link');
+
+    if (link.href === '/news') {
+      link.href = '/';
+      icon.src = 'https://i.ibb.co/KLn5jBS/grid.png';
+    } else {
+      link.href = '/news';
+      icon.src = 'https://i.ibb.co/DMBK0kn/earth-icon-1-min.png';
+    }
   }
 
   applyFilter() {
     const filterValue = this.shadowRoot.querySelector('paper-input[name="country"]').value;
     const sorterValue = this.shadowRoot.getElementById('sort-country-input').value;
 
-    this.updateFilter({ detail: { filterValue } });
-    this.updateSorter({ detail: { sorterValue } });
+    this.filter = filterValue;
+    this.sorter = sorterValue;
 
     this.closeFilterModal();
   }
 
   closeFilterModal() {
-    this.shadowRoot.getElementById('filter-modal').style.display = 'none';
+    this.isFilterOpen = false;
   }
 
   openFilterModal() {
     this.toggleDrawer();
-    this.shadowRoot.getElementById('filter-modal').style.display = 'block';
+    this.isFilterOpen = true;
   }
 
   openStatisticsModal() {
-    this.shadowRoot.getElementById('statistics-modal').style.display = 'block';
+    this.isStatisticsOpen = true;
+  }
+
+  openStatisticsModalFromDrawer() {
+    this.toggleDrawer();
+    this.isStatisticsOpen = true;
+  }
+
+  closeStatisticsModal() {
+    this.isStatisticsOpen = false;
   }
 
   toggleDrawer() {
@@ -229,7 +307,7 @@ export class CovidAppBody extends LitElement {
   }
 
   sortCountries(countries) {
-    countries.sort((a, b) => {
+    return [...countries].sort((a, b) => {
       if (this.sorter === 'Cases') return ((a.cases.total > b.cases.total) ? -1 : 1);
       if (this.sorter === 'Recovered') return ((a.cases.recovered > b.cases.recovered) ? -1 : 1);
       if (this.sorter === 'Deaths') return ((a.deaths.total > b.deaths.total) ? -1 : 1);

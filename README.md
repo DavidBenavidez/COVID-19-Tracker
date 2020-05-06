@@ -1,26 +1,20 @@
-## COVID-19 Tracker App
+<h1 align="center">
+  <br />
+  <a href="https://drb-tracker.netlify.com/"><img src="icons/144x144.png" alt="icon" width="144px" /></a>
+  <br/>
+  <br/>
+  Covid-19 Tracker
+  <br/>
+  <br/>
+  <a href="https://lit-element.polymer-project.org/"><img src="https://img.shields.io/badge/-LitElement-9cf" /></a>
+  <br/>
+</h1>
+<h4 align="center">A tracker for COVID-19</h4>
+
 ## Deployed at
-https://drb-covid-19-tracker.herokuapp.com/
+https://drb-tracker.netlify.com
 
-## Quickstart
-
-To get started:
-
-```sh
-yarn install
-yarn start
-```
-
-## Scripts
-
-- `start` runs your app for development, reloading on file changes
-- `start:build` runs your app after it has been built using the build command
-- `build` builds your app and outputs it in your `dist` directory
-- `test` runs your test suite with Karma
-- `lint` runs the linter for your project
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
+### Running the application
+1. Clone this repository.
+2. Install all the dependencies with `npm install` or `yarn install`.
+3. Start the development server with `npm start` or `yarn start`.

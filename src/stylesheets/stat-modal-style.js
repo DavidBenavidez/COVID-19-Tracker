@@ -5,6 +5,10 @@ export default css`
       display: none;
     }
 
+    :host([shown]) {
+      display: block;
+    }
+
     #modal-overlay {
       position: fixed; /* Sit on top of the page content */
       width: 100%; /* Full width (cover the whole page) */
@@ -25,7 +29,7 @@ export default css`
       width: 400px;
       left: 50%;
       margin-left: -200px;
-      bottom: 20%;
+      bottom: 50%;
       justify-content: center;
       flex-flow: row wrap;
       cursor: default;
@@ -41,6 +45,7 @@ export default css`
     .modal-body {
       height: 60%;
       width: 100%;
+      position: relative;
     }
 
     .modal-footer {
@@ -56,7 +61,6 @@ export default css`
 
     @media only screen and (max-width: 600px) { 
       .modal-container { 
-        height: 300px;
         width: 300px;
         margin-left: -150px;
         bottom: 30%;
@@ -65,7 +69,6 @@ export default css`
 
     @media only screen and (min-width: 600px) { 
       .modal-container { 
-        height: 300px;
         width: 400px;
         margin-left: -200px;
         bottom: 30%;
@@ -74,7 +77,6 @@ export default css`
 
     @media only screen and (min-width: 768px) { 
       .modal-container { 
-        height: 500px;
         width: 400px;
         margin-left: -200px;
         bottom: 10%;
@@ -83,7 +85,6 @@ export default css`
 
     @media only screen and (min-width: 992px) { 
       .modal-container { 
-        height: 500px; 
         bottom: 10%;
         width: 400px;
         margin-left: -200px;
@@ -92,8 +93,7 @@ export default css`
 
     @media only screen and (min-width: 1200px) { 
       .modal-container { 
-        height: 500px; 
-        bottom: 10%;
+        bottom: 20%;
         width: 400px;
         margin-left: -200px;
       } 

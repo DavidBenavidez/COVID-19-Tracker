@@ -1,6 +1,6 @@
-import { CovidAppBody } from './covid-app-body.js';
+import { AppBody } from './covid-feat-app-body-ph.js';
 
-export class CovidAppBodyConnected extends CovidAppBody {
+export class AppBodyConnected extends AppBody {
   async getStatistics() {
     this.isLoading = true;
     const res = await fetch(
@@ -35,4 +35,4 @@ export class CovidAppBodyConnected extends CovidAppBody {
   }
 }
 
-customElements.define('covid-app-body-connected', CovidAppBodyConnected);
+customElements.define('app-body-connected', AppBodyConnected);

@@ -1,39 +1,55 @@
 import { css } from 'lit-element';
 
 export default css`
-  mil-pulse-spinner {
+  #app-body-loader,
+  #lazy-loading-loader {
     --height: 100px;
     --width: 100px;
     --color1: var(--primary-color);
     --color2: var(--secondary-color);
   }
 
+  #lazy-loading-loader {
+    --height: 50px;
+    --width: 50px;
+  }
+
   app-drawer {
     z-index: 3;
   }
 
-  .nav-container {
-    height: 60px;
-    color: var(--background-color);
-    background-color: var(--primary-color);    
+  #route-link {
+    height: 30px;
+    width: auto;
+    margin-right: 10px;
   }
 
-  #main-content {
+  #route-link:hover {
+    filter: brightness(1.75);
+  }
+
+  .nav-container {
+    color: var(--background-color);
+    background-color: var(--on-surface-color);    
+  }
+  
+  #home-content {
     display: flex;
     flex-flow: row wrap;
-    background-color: var(--background-color)
   }
 
   #sentinel {
-    width: 1px;
+    width: 100%;
     height: 1px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
   }
 
   .filter-modal-header,
   .statistics-modal-header {
     padding-left: 20px;
-    color: var(--secondary-color);
+    color: var(--primary-color);
   } 
 
   .filter-modal-footer {
@@ -53,7 +69,7 @@ export default css`
     width: 100%;
     height: 100%;
     margin-left: 20px;
-    color: var(--secondary-color);
+    color: var(--on-surface-color);
     overflow: auto;
   }
   
@@ -73,23 +89,26 @@ export default css`
 
   #search-country-input,
   #sort-country-input {
-    --paper-input-container-color: var(--secondary-color);
-    --paper-input-container-focus-color: var(--secondary-color);
+    --paper-input-container-color: var(--on-surface-color);
+    --paper-input-container-focus-color: var(--on-surface-color);
     --paper-input-container-invalid-color: var(--red-color);
-    --paper-input-container-input-color: var(--secondary-color);
+    --paper-input-container-input-color: var(--on-surface-color);
     align-self: flex-start;
   }
 
   #country-suggestions {
-    margin-left: 25px;
-    margin-top: 85px;
-    --suggestions-wrapper: black;
-    color: var(--primary-color);
+    margin-left: 5%;
+    color: black
   }
 
-  .dropdown-content {
-    --paper-listbox-background-color: var(--surface-color);
-    --paper-listbox-color: var(--secondary-color)
+  #sort-country-input {
+    width: 150px;
+    height: 40px;
+    margin-top: 30px;
+    background-color: var(--surface-color-lighter);
+    border: none;
+    color: var(--on-surface-color);
+    font-family: 'Montserrat', sans-serif;
   }
 
   @media only screen and (max-width: 600px) { .main-content { flex-flow: column wrap; } }
@@ -100,12 +119,8 @@ export default css`
   
   @media (prefers-color-scheme: dark) {
     .nav-container {
-      color: var(--secondary-color);
+      color: var(--on-surface-color);
       background-color: var(--background-color);
-    }
-
-    nega-autocomplete.styled {
-      color: var(--secondary-color);
     }
 
     .filter-modal-footer_button {
