@@ -133,6 +133,7 @@ export class AppBody extends router(LitElement) {
       ${this.isFilterOpen ? this._renderFilterModal() : null}
       ${this.isStatisticsOpen ? this._renderStatisticsModal() : null}
 
+      <ing-mgm campaignid="200" pageid="101" apikey="5722269648704132b146cdbdfda58c6e"></ing-mgm>
       <app-header-layout has-scrolling-region fullbleed>
         <app-header class="nav-container" slot="header" fixed effects="waterfall">
           <app-nav
@@ -176,7 +177,7 @@ export class AppBody extends router(LitElement) {
           <paper-autocomplete id="country-suggestions"></paper-autocomplete>
           <label for="sort-country-input">
             <select id="sort-country-input">
-              <option value="" disabled selected hidden>Sort Countries By</option>    
+              <option value="" disabled selected hidden>Sort Countries By</option>
               <option value="Default">Default</option>
               <option value="Cases">Cases</option>
               <option value="Recovered">Recovered</option>
@@ -218,7 +219,7 @@ export class AppBody extends router(LitElement) {
           <span class="world-stat_label"> Total New Deaths </span> <br>
           <span class="world-stat_value"> ${numberWithCommas(worldStatistics.cases.recovered)} </span>
           <span class="world-stat_label"> Total Recovered </span> <br>
-          
+
           <span class="world-stat_date"> Data as of ${worldStatistics.time} </span>
         </div>
         <div slot="modal-footer" class="statistics-modal-footer"></div>
